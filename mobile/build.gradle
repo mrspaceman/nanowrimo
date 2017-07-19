@@ -1,0 +1,82 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion "26.0.0"
+    defaultConfig {
+        applicationId "uk.co.droidinactu.nanowrimo"
+        minSdkVersion 23
+        targetSdkVersion 26
+        multiDexEnabled true
+        versionCode 1
+        versionName "2017.08.1"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    wearApp project(':wear')
+    implementation 'com.google.android.gms:play-services-wearable:10.2.1'
+    testImplementation 'junit:junit:4.12'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation 'com.dropbox.core:dropbox-core-sdk:3.0.3'
+    implementation 'com.squareup.picasso:picasso:2.5.2'
+    implementation 'com.squareup.okhttp:okhttp:2.7.5'
+    implementation 'com.squareup.okhttp3:okhttp:3.5.0'
+    implementation 'com.android.support:appcompat-v7:25.4.0'
+    implementation 'com.android.support:support-v4:25.4.0'
+    implementation 'com.android.support:design:25.4.0'
+
+    // Google
+    implementation 'com.google.android.gms:play-services-auth:10.2.1'
+    implementation 'com.google.android.gms:play-services-maps:10.2.1'
+    // Firebase
+    implementation 'com.google.firebase:firebase-analytics:10.2.1'
+    implementation 'com.google.firebase:firebase-database:10.2.1'
+    implementation 'com.google.firebase:firebase-storage:10.2.1'
+    implementation 'com.google.firebase:firebase-auth:10.2.1'
+    implementation 'com.google.firebase:firebase-config:10.2.1'
+    implementation 'com.google.android.gms:play-services-appinvite:10.2.1'
+    implementation 'com.google.firebase:firebase-messaging:10.2.1'
+    implementation 'com.google.android.gms:play-services-ads:10.2.1'
+    implementation 'com.google.firebase:firebase-appindexing:10.2.1'
+    implementation 'com.google.firebase:firebase-crash:10.2.1'
+    implementation 'com.google.firebase:firebase-analytics:10.2.1'
+    // Firebase UI
+    implementation 'com.firebaseui:firebase-ui-database:1.2.0'
+    // Facebook Android SDK (only required for Facebook Login)
+    // Used in FacebookLoginActivity. This is only compiled into the minSdkJellybean variant of this
+    // app. You can build a 'minSdkGingerbread' variant to test on devices with 9 <= SDK <= 15.
+    implementation 'com.facebook.android:facebook-android-sdk:4.9.0'
+    implementation 'com.android.support:customtabs:25.4.0'
+    // Twitter Android SDK (only required for Twitter Login)
+    compile('com.twitter.sdk.android:twitter-core:1.6.6@aar') {
+        transitive = true
+    }
+    compile('com.twitter.sdk.android:twitter:1.13.1@aar') {
+        transitive = true
+    }
+    implementation 'joda-time:joda-time:2.9.9'
+    implementation 'org.apache.directory.studio:org.apache.commons.io:2.4'
+    compile 'com.mcxiaoke.volley:library:1.0.7'
+    compile 'com.github.filippudak.progresspieview:library:1.0.+'
+}
+
+apply plugin: 'com.google.gms.google-services'
