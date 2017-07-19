@@ -1,5 +1,4 @@
 # NaNoWriMo Helper
-A daily word tracker designed for NaNoWriMo
 
 Features:
 
