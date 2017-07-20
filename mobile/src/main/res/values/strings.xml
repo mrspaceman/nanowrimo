@@ -81,7 +81,10 @@
     <string name="choose_favorite_user">Select favorite</string>
     <string name="title_compare_activity">%1$s vs %2$s</string>
     <string name="linear_progress_label">Theoretically progression</string>
-    <string name="appwidget_text">EXAMPLE</string>
+
+    <string name="appwidget_text_name">Name : %1$s</string>
+    <string name="appwidget_text_novel">Novel : %1$s</string>
+    <string name="appwidget_text_progress">%1$s / %2$s</string>
 
 
     <string name="drawer_open">Open navigation drawer</string>
@@ -109,6 +112,9 @@
 
     <string name="pref_wordcount_target_title">Target Wordcount</string>
     <string name="pref_wordcount_target_default">50000</string>
+
+    <string name="pref_novel_name_title">Novel Name</string>
+    <string name="pref_novel_name_default">My New Novel</string>
 
     <string name="title_activity_about">AboutActivity</string>
     <string name="about_description_one">This app helps you track your progress towards winning <b>NaNoWriMo</b>

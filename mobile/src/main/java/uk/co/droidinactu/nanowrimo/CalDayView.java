@@ -64,7 +64,7 @@ public class CalDayView extends LinearLayout implements View.OnClickListener {
         lp.gravity = Gravity.END;
 
         mDailyQuota = new TextView(context);
-        mDailyQuota.setPadding(1, 1, 5, 1);
+        mDailyQuota.setPadding(1, 1, 5, 0);
         int tmpWrds1 = Math.round((float) wordcountTrgt / (float) 30);
         mDailyQuota.setText("" + tmpWrds1);
         mDailyQuota.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
@@ -74,7 +74,7 @@ public class CalDayView extends LinearLayout implements View.OnClickListener {
         addView(mDailyQuota, lp);
 
         mDailyQuotaRevised = new TextView(context);
-        mDailyQuotaRevised.setPadding(1, 1, 5, 1);
+        mDailyQuotaRevised.setPadding(1, 1, 5, 0);
         if (mDaysWrdCnt.getDayNumber() == 1) {
             mDailyQuotaRevised.setText("");
         } else {
@@ -87,9 +87,10 @@ public class CalDayView extends LinearLayout implements View.OnClickListener {
         addView(mDailyQuotaRevised, lp);
 
         mDailyActual = new TextView(context);
-        mDailyActual.setPadding(1, 1, 5, 1);
+        mDailyActual.setPadding(1, 1, 5, 0);
         mDailyActual.setText("" + mDaysWrdCnt.getWordcount());
-        mDailyActual.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
+        mDailyActual.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 22);
+        mDailyActual.setTypeface(null, Typeface.BOLD);
         if (mDaysWrdCnt.getWordcount() >= pDayQuotaRevised) {
             mDailyActual.setTextColor(Color.GREEN);
         } else {
@@ -99,7 +100,7 @@ public class CalDayView extends LinearLayout implements View.OnClickListener {
         addView(mDailyActual, lp);
 
         mCumulative = new TextView(context);
-        mCumulative.setPadding(1, 1, 5, 1);
+        mCumulative.setPadding(1, 1, 5, 0);
         if (mDaysWrdCnt.getDayNumber() == 1) {
             mCumulative.setText("");
         } else {
@@ -110,7 +111,7 @@ public class CalDayView extends LinearLayout implements View.OnClickListener {
         addView(mCumulative, lp);
 
         mWordsLeft = new TextView(context);
-        mWordsLeft.setPadding(1, 1, 5, 1);
+        mWordsLeft.setPadding(1, 1, 5, 0);
         mWordsLeft.setText("" + (wordcountTrgt - pCumulative));
         mWordsLeft.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
         mWordsLeft.setGravity(Gravity.RIGHT);

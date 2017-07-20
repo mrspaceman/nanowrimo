@@ -175,7 +175,7 @@ public class DataManager {
         dayWrdCounts.put(obj.getDate(), obj);
     }
 
-    public Map<String, DayWordCount> getWordCounts(int year, int month) {
+    public Map<String, DayWordCount> getWordCounts(final int year, final int month) {
         Map<String, DayWordCount> list = new HashMap<>();
         for (String key : dayWrdCounts.keySet()) {
             if (key.contains("/" + month + "/" + year)) {
@@ -196,4 +196,13 @@ public class DataManager {
     }
 
 
+    public int getCurrentTotal(final int year, final int month) {
+        int total = 0;
+        for (String key : dayWrdCounts.keySet()) {
+            if (key.contains("/" + month + "/" + year)) {
+                total += dayWrdCounts.get(key).getWordcount();
+            }
+        }
+        return total;
+    }
 }

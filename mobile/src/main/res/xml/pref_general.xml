@@ -36,6 +36,15 @@
 
 
     <EditTextPreference
+        android:defaultValue="@string/pref_novel_name_default"
+        android:key="pref_novel_name"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/pref_novel_name_title" />
+
+
+    <EditTextPreference
         android:defaultValue="@string/pref_wordcount_target_default"
         android:key="pref_wordcount_target"
         android:maxLines="1"
