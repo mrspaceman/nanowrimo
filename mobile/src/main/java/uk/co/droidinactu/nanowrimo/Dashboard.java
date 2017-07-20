@@ -125,12 +125,9 @@ public class Dashboard extends AppCompatActivity implements
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
+        fab.setOnClickListener(view -> {
+            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
         });
         fab.setVisibility(View.GONE);
 
@@ -139,11 +136,9 @@ public class Dashboard extends AppCompatActivity implements
         if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
             // Should we show an explanation?
             if (shouldShowRequestPermissionRationale(android.Manifest.permission.ACCESS_FINE_LOCATION)) {
-
                 // Show an explanation to the user *asynchronously* -- don't block
                 // this thread waiting for the user's response! After the user
                 // sees the explanation, try again to request the permission.
-
             } else {
                 // No explanation needed, we can request the permission.
                 requestPermissions(
@@ -158,13 +153,10 @@ public class Dashboard extends AppCompatActivity implements
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         mFusedLocationClient.getLastLocation()
-                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
-                    @Override
-                    public void onSuccess(Location location) {
-                        // Got last known location. In some rare situations this can be null.
-                        if (location != null) {
-                            // ...
-                        }
+                .addOnSuccessListener(this, location -> {
+                    // Got last known location. In some rare situations this can be null.
+                    if (location != null) {
+                        // ...
                     }
                 });
 
@@ -198,7 +190,6 @@ public class Dashboard extends AppCompatActivity implements
             return;
         }
         NaNoApplication.getInstance().getDataManager().initialiseListeners(wordcountDataListener);
-        //   NaNoApplication.getInstance().getDataManager().createDemoData();
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API)
@@ -217,6 +208,7 @@ public class Dashboard extends AppCompatActivity implements
 
         dash_month_table = (TableLayout) findViewById(R.id.dash_month_table);
         dash_month_table.setBackgroundDrawable(getResources().getDrawable(R.drawable.cal_table));
+
         updateCalendar();
     }
 
@@ -236,6 +228,7 @@ public class Dashboard extends AppCompatActivity implements
     }
 
     private void updateCalendarHeader() {
+        dash_month_table.removeViews(0, dash_month_table.getChildCount());
         String[] headers = {"Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"};
         TableRow tblRwHeader = (TableRow) findViewById(R.id.dash_month_table_rowHead);
         for (int col = 0; col < 7; col++) {

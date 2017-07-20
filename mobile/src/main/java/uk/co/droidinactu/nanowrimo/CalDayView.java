@@ -119,28 +119,25 @@ public class CalDayView extends LinearLayout implements View.OnClickListener {
     }
 
     @Override
-    public void onClick(View view) {
+    public void onClick(View pView) {
         NaNoApplication.d(LOG_TAG + "onClick() pressed");
 
         final Dialog dialog = new Dialog(getContext());
         dialog.setContentView(R.layout.dialog_enter_word_count);
         dialog.setTitle("Enter Wordcount for " + mDaysWrdCnt.getDayNumber());
 
-        TextView text = (TextView) dialog.findViewById(R.id.dialog_wrdcnt_desc);
+        final TextView text = (TextView) dialog.findViewById(R.id.dialog_wrdcnt_desc);
         text.setText("Android custom dialog example!");
-        ImageView image = (ImageView) dialog.findViewById(R.id.dialog_wrdcnt_icon);
+        final ImageView image = (ImageView) dialog.findViewById(R.id.dialog_wrdcnt_icon);
         image.setImageResource(R.mipmap.ic_launcher);
 
-        EditText txtWrdcnt = (EditText) dialog.findViewById(R.id.dialog_wrdcnt_words);
+        final EditText txtWrdcnt = (EditText) dialog.findViewById(R.id.dialog_wrdcnt_words);
         txtWrdcnt.setText("" + mDaysWrdCnt.getWordcount());
         txtWrdcnt.setSelection(txtWrdcnt.getText().length());
 
-        Button dialogButton = (Button) dialog.findViewById(R.id.dialog_wrdcnt_ButtonOK);
+        final Button dialogButton = (Button) dialog.findViewById(R.id.dialog_wrdcnt_ButtonOK);
         // if button is clicked, close the custom dialog
-        dialogButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EditText txtWrdcnt = (EditText) dialog.findViewById(R.id.dialog_wrdcnt_words);
+        dialogButton.setOnClickListener(view -> {
                 String wrdcntStr = txtWrdcnt.getText().toString().trim();
                 try {
                     int wordCount = Integer.parseInt(wrdcntStr);
@@ -151,7 +148,6 @@ public class CalDayView extends LinearLayout implements View.OnClickListener {
                 } catch (NumberFormatException nfe) {
                 }
                 dialog.dismiss();
-            }
         });
 
         dialog.show();
