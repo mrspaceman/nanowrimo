@@ -2,6 +2,7 @@ package uk.co.droidinactu.nanowrimo;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.util.TypedValue;
@@ -35,10 +36,13 @@ public class CalDayView extends LinearLayout implements View.OnClickListener {
     private DayWordCount mDaysWrdCnt;
 
     public CalDayView(final Context context,
-                       int pDayQuotaRevised,
+                      int pDayQuotaRevised,
                       final int pCumulative,
                       final DayWordCount pDaysWrdCnt) {
         super(context);
+
+        SharedPreferences sp = context.getSharedPreferences(DataManager.PREFS_NAME, Context.MODE_PRIVATE);
+        final int wordcountTrgt = sp.getInt("pref_wordcount_target", 50000);
 
         this.mDaysWrdCnt = pDaysWrdCnt;
         this.setOrientation(VERTICAL);
@@ -61,7 +65,7 @@ public class CalDayView extends LinearLayout implements View.OnClickListener {
 
         mDailyQuota = new TextView(context);
         mDailyQuota.setPadding(1, 1, 5, 1);
-        int tmpWrds1 = Math.round((float)DataManager.NANOWRIMO_MONTH_TARGET / (float)30);
+        int tmpWrds1 = Math.round((float) wordcountTrgt / (float) 30);
         mDailyQuota.setText("" + tmpWrds1);
         mDailyQuota.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
         mDailyQuota.setTypeface(null, Typeface.ITALIC);
@@ -107,7 +111,7 @@ public class CalDayView extends LinearLayout implements View.OnClickListener {
 
         mWordsLeft = new TextView(context);
         mWordsLeft.setPadding(1, 1, 5, 1);
-        mWordsLeft.setText("" + (DataManager.NANOWRIMO_MONTH_TARGET - pCumulative));
+        mWordsLeft.setText("" + (wordcountTrgt - pCumulative));
         mWordsLeft.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
         mWordsLeft.setGravity(Gravity.RIGHT);
         addView(mWordsLeft, lp);

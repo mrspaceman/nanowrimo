@@ -1,7 +1,11 @@
 package uk.co.droidinactu.nanowrimo;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -28,6 +32,9 @@ import android.widget.TextView;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -50,7 +57,6 @@ public class Dashboard extends AppCompatActivity implements
         GoogleApiClient.OnConnectionFailedListener {
     private static final String LOG_TAG = Dashboard.class.getSimpleName() + ":";
 
-
     private static final int REQUEST_INVITE = 1;
     private static final int REQUEST_IMAGE = 2;
     public static final int DEFAULT_MSG_LENGTH_LIMIT = 150;
@@ -60,6 +66,7 @@ public class Dashboard extends AppCompatActivity implements
 
     public static final String INSTANCE_ID_TOKEN_RETRIEVED = "iid_token_retrieved";
     public static final String BIKERCHAT_MSG_LENGTH = "bikerChat_msg_length";
+    private static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 8193;
 
     private ProgressBar mProgressBar;
     private FirebaseAnalytics mFirebaseAnalytics;
@@ -72,8 +79,7 @@ public class Dashboard extends AppCompatActivity implements
     private SharedPreferences mSharedPreferences;
     private int mMonthNbr = 11;
 
-    private String[] mPlanetTitles;
-
+    private FusedLocationProviderClient mFusedLocationClient;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
 
@@ -125,7 +131,42 @@ public class Dashboard extends AppCompatActivity implements
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
-        });fab.setVisibility(View.GONE);
+        });
+        fab.setVisibility(View.GONE);
+
+        int permissionCheck = checkSelfPermission(android.Manifest.permission.ACCESS_FINE_LOCATION);
+
+        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+            // Should we show an explanation?
+            if (shouldShowRequestPermissionRationale(android.Manifest.permission.ACCESS_FINE_LOCATION)) {
+
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+
+            } else {
+                // No explanation needed, we can request the permission.
+                requestPermissions(
+                        new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                        MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+        }
+
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        mFusedLocationClient.getLastLocation()
+                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        // Got last known location. In some rare situations this can be null.
+                        if (location != null) {
+                            // ...
+                        }
+                    }
+                });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -179,7 +220,6 @@ public class Dashboard extends AppCompatActivity implements
         updateCalendar();
     }
 
-
     private String getMonthName(int num) {
         String month = "wrong";
         DateFormatSymbols dfs = new DateFormatSymbols();
@@ -224,6 +264,9 @@ public class Dashboard extends AppCompatActivity implements
         int monthDayNbr = 1;
         int cumWordCount = 0;
 
+        SharedPreferences sp = getSharedPreferences(DataManager.PREFS_NAME, Context.MODE_PRIVATE);
+        final int wordcountTrgt = sp.getInt("pref_wordcount_target", 50000);
+
         final Map<String, DayWordCount> wrdCnts = NaNoApplication.getInstance().getDataManager().getWordCounts(yearNbr, mMonthNbr);
         dash_month_table.removeViews(1, dash_month_table.getChildCount() - 1);
 
@@ -235,7 +278,7 @@ public class Dashboard extends AppCompatActivity implements
                 if (dayWrdCount == null) {
                     dayWrdCount = new DayWordCount(monthDayNbr + "/" + mMonthNbr + "/" + yearNbr, 0);
                 }
-                int revisedQuota = Math.round((float)(DataManager.NANOWRIMO_MONTH_TARGET - cumWordCount) / (float)(31 - monthDayNbr));
+                int revisedQuota = Math.round((float) (wordcountTrgt - cumWordCount) / (float) (31 - monthDayNbr));
                 cumWordCount += dayWrdCount.getWordcount();
                 tblRw.addView(new CalDayView(this,
                         revisedQuota,
@@ -255,7 +298,7 @@ public class Dashboard extends AppCompatActivity implements
                     if (dayWrdCount == null) {
                         dayWrdCount = new DayWordCount(monthDayNbr + "/" + mMonthNbr + "/" + yearNbr, 0);
                     }
-                    int revisedQuota = Math.round((float)(DataManager.NANOWRIMO_MONTH_TARGET - cumWordCount) / (float)(31 - monthDayNbr));
+                    int revisedQuota = Math.round((float) (wordcountTrgt - cumWordCount) / (float) (31 - monthDayNbr));
                     cumWordCount += dayWrdCount.getWordcount();
                     tblRw.addView(new CalDayView(this,
                             revisedQuota,
@@ -306,6 +349,7 @@ public class Dashboard extends AppCompatActivity implements
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            startActivity(new Intent(this, SettingsActivity.class));
             return true;
         }
 
@@ -317,17 +361,19 @@ public class Dashboard extends AppCompatActivity implements
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.nav_nanowrimo) {
+            Uri uri = Uri.parse("http://www.nanowrimo.org/");
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(intent);
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_reset) {
+            // clear out database
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_settings) {
+            startActivity(new Intent(this, SettingsActivity.class));
 
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_about) {
+            startActivity(new Intent(this, AboutActivity.class));
 
         }
 

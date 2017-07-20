@@ -1,0 +1,46 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="pref_nano_auto_update"
+        android:summary="@string/pref_nano_auto_update_summary"
+        android:title="@string/pref_nano_auto_update_title" />
+
+    <!-- NOTE: EditTextPreference accepts EditText attributes. -->
+    <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->
+    <EditTextPreference
+        android:defaultValue="@string/pref_nano_username_default"
+        android:inputType="textAutoComplete"
+        android:key="pref_nano_username"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/pref_nano_username_title" />
+
+    <EditTextPreference
+        android:defaultValue="@string/pref_nano_user_secret_key_default"
+        android:key="pref_nano_user_secret_key"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/pref_nano_user_secret_key_title" />
+
+
+    <EditTextPreference
+        android:defaultValue="@string/pref_nano_user_region_default"
+        android:key="pref_nano_user_region"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/pref_nano_user_region_title" />
+
+
+    <EditTextPreference
+        android:defaultValue="@string/pref_wordcount_target_default"
+        android:key="pref_wordcount_target"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/pref_wordcount_target_title" />
+
+</PreferenceScreen>

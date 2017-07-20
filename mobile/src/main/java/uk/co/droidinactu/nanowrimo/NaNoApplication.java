@@ -12,7 +12,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Environment;
 import android.os.PowerManager;
-import android.support.multidex.MultiDexApplication;
 import android.util.Log;
 import android.util.Patterns;
 
@@ -36,7 +35,7 @@ import uk.co.droidinactu.nanowrimo.db.DataManager;
 /**
  * Created by aspela on 17/05/16.
  */
-public class NaNoApplication extends MultiDexApplication {
+public class NaNoApplication extends Application {
     public static final String LOG_TAG = NaNoApplication.class.getSimpleName() + ":";
 
     public final static boolean IS_DEBUGGING = true;

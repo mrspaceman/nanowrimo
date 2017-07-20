@@ -84,18 +84,38 @@
     <string name="appwidget_text">EXAMPLE</string>
 
 
-    <string-array name="planets_array">
-        <item>Mercury</item>
-        <item>Venus</item>
-        <item>Earth</item>
-        <item>Mars</item>
-        <item>Jupiter</item>
-        <item>Saturn</item>
-        <item>Uranus</item>
-        <item>Neptune</item>
-    </string-array>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
     <string name="action_websearch">Web search</string>
     <string name="app_not_available">Sorry, there\'s no web browser available</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Strings related to Settings -->
+
+    <string name="pref_nano_auto_update_title">Update NaNoWriMo Account</string>
+    <string name="pref_nano_auto_update_summary">Automatically update your NaNoWriMo account when you
+        add a wordcount</string>
+    <string name="pref_nano_auto_update_true">Automatically send your wordcount to the NaNoWriMo website</string>
+    <string name="pref_nano_auto_update_false">Do not send your wordcount to the NaNoWriMo website</string>
+
+    <string name="pref_nano_username_title">NaNoWriMo Username</string>
+    <string name="pref_nano_username_default">mrspaceman</string>
+
+    <string name="pref_nano_user_secret_key_title">NaNoWriMo Secret Key</string>
+    <string name="pref_nano_user_secret_key_default">Unknown</string>
+
+    <string name="pref_nano_user_region_title">NaNoWriMo Region</string>
+    <string name="pref_nano_user_region_default">europe-england-bristol-bath</string>
+
+    <string name="pref_wordcount_target_title">Target Wordcount</string>
+    <string name="pref_wordcount_target_default">50000</string>
+
+    <string name="title_activity_about">AboutActivity</string>
+    <string name="about_description_one">This app helps you track your progress towards winning <b>NaNoWriMo</b>
+    </string>
+    <string name="about_cell_number_1">Daily Target</string>
+    <string name="about_cell_number_2">Daily Target-Revised</string>
+    <string name="about_cell_number_3">Actual Words Written</string>
+    <string name="about_cell_number_4">Total Words Written</string>
+    <string name="about_cell_number_5">Words Left</string>
 </resources>
