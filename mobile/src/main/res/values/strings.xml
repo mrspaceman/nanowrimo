@@ -84,7 +84,7 @@
 
     <string name="appwidget_text_name">Name : %1$s</string>
     <string name="appwidget_text_novel">Novel : %1$s</string>
-    <string name="appwidget_text_progress">%1$s / %2$s</string>
+    <string name="appwidget_text_progress">%1$d / %2$d</string>
 
 
     <string name="drawer_open">Open navigation drawer</string>

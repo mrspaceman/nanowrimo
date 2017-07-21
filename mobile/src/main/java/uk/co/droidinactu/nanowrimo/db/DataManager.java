@@ -78,11 +78,13 @@ public class DataManager {
     }
 
     public void initialise() {
-        FirebaseApp.initializeApp(context);
-        mFbDatabase = FirebaseDatabase.getInstance();
-        mFbDatabase.setPersistenceEnabled(true);
-        mFirebaseAuth = FirebaseAuth.getInstance();
-        mFirebaseUser = mFirebaseAuth.getCurrentUser();
+        if (mFbDatabase == null) {
+            FirebaseApp.initializeApp(context);
+            mFbDatabase = FirebaseDatabase.getInstance();
+            mFbDatabase.setPersistenceEnabled(true);
+            mFirebaseAuth = FirebaseAuth.getInstance();
+            mFirebaseUser = mFirebaseAuth.getCurrentUser();
+        }
     }
 
     public void initialiseListeners(ChildEventListener wordcountMsgListener) {
@@ -205,4 +207,5 @@ public class DataManager {
         }
         return total;
     }
+
 }

@@ -30,6 +30,7 @@ public class NaNoMonthWidgetCfg extends AppCompatActivity {
             Intent resultValue = new Intent();
             resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);
             setResult(RESULT_OK, resultValue);
+            NaNoMonthWidgetProvider.updateAppWidget(this.getApplicationContext(),appWidgetManager, mAppWidgetId);
             finish();
         }
     }

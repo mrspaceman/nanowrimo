@@ -158,7 +158,7 @@ public class Dashboard extends AppCompatActivity implements
                         new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
                         MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
 
-                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION is an
                 // app-defined int constant. The callback method gets the
                 // result of the request.
             }
@@ -324,9 +324,7 @@ public class Dashboard extends AppCompatActivity implements
         int widgetIDs[] = appWidgetManager.getAppWidgetIds(new ComponentName(getApplication(), NaNoMonthWidgetProvider.class));
 
         for (int mAppWidgetId : widgetIDs) {
-            Intent intent = new Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE, null, this, NaNoMonthWidgetProvider.class);
-            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, new int[]{mAppWidgetId});
-            sendBroadcast(intent);
+            NaNoMonthWidgetProvider.updateAppWidget(this.getApplicationContext(),appWidgetManager, mAppWidgetId);
         }
     }
 

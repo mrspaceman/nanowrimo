@@ -17,8 +17,7 @@ import uk.co.droidinactu.nanowrimo.db.DataManager;
  */
 public class NaNoMonthWidgetProvider extends AppWidgetProvider {
 
-    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
-                                int appWidgetId) {
+    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
 
         SharedPreferences sp = context.getSharedPreferences(DataManager.PREFS_NAME, Context.MODE_PRIVATE);
         final int wordcountTrgt = sp.getInt("pref_wordcount_target", 50000);
@@ -28,9 +27,15 @@ public class NaNoMonthWidgetProvider extends AppWidgetProvider {
 
         final int currntWrdCount = NaNoApplication.getInstance().getDataManager().getCurrentTotal(monthNbr, yearNbr);
 
-        CharSequence widgetTextName = context.getString(R.string.appwidget_text_name);
-        CharSequence widgetTextNovel = context.getString(R.string.appwidget_text_novel);
-        CharSequence widgetTextProgress = context.getString(R.string.appwidget_text_progress);
+        DataManager dataMgr = NaNoApplication.getInstance().getDataManager();
+        dataMgr.initialise();
+
+        String widgetTextName = String.format(context.getString(R.string.appwidget_text_name), dataMgr.getFirebaseUser().getDisplayName());
+
+        String widgetTextNovel = String.format(context.getString(R.string.appwidget_text_novel), sp.getString("pref_novel_name", "My New Novel"));
+
+        String widgetTextProgress = String.format(context.getString(R.string.appwidget_text_progress),
+                currntWrdCount, wordcountTrgt);
 
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.nano_month_widget);
