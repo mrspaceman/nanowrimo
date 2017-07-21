@@ -15,7 +15,7 @@ import uk.co.droidinactu.nanowrimo.db.DataManager;
 /**
  * Implementation of App Widget functionality.
  */
-public class NaNoMonthWidget extends AppWidgetProvider {
+public class NaNoMonthWidgetProvider extends AppWidgetProvider {
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
@@ -47,7 +47,6 @@ public class NaNoMonthWidget extends AppWidgetProvider {
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         // There may be multiple widgets active, so update all of them
         for (int appWidgetId : appWidgetIds) {
-
             // Create an Intent to launch ExampleActivity
             Intent intent = new Intent(context, Dashboard.class);
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);

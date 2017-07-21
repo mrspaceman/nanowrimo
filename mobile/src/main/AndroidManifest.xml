@@ -31,7 +31,7 @@
         </activity>
         <activity android:name=".SignInActivity" />
 
-        <receiver android:name=".NaNoMonthWidget">
+        <receiver android:name=".NaNoMonthWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="android.appwidget.action.APPWIDGET_OPTIONS_CHANGED" />

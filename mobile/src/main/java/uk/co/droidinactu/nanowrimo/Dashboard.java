@@ -1,10 +1,11 @@
 package uk.co.droidinactu.nanowrimo;
 
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -34,7 +35,6 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -162,16 +162,15 @@ public class Dashboard extends AppCompatActivity implements
                 // app-defined int constant. The callback method gets the
                 // result of the request.
             }
+        } else {
+            mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+            mFusedLocationClient.getLastLocation().addOnSuccessListener(this, location -> {
+                // Got last known location. In some rare situations this can be null.
+                if (location != null) {
+                    // ...
+                }
+            });
         }
-
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        mFusedLocationClient.getLastLocation()
-                .addOnSuccessListener(this, location -> {
-                    // Got last known location. In some rare situations this can be null.
-                    if (location != null) {
-                        // ...
-                    }
-                });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -315,6 +314,19 @@ public class Dashboard extends AppCompatActivity implements
                 }
             }
             dash_month_table.addView(tblRw);
+        }
+        updateAppWidget();
+    }
+
+
+    private void updateAppWidget() {
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this.getApplicationContext());
+        int widgetIDs[] = appWidgetManager.getAppWidgetIds(new ComponentName(getApplication(), NaNoMonthWidgetProvider.class));
+
+        for (int mAppWidgetId : widgetIDs) {
+            Intent intent = new Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE, null, this, NaNoMonthWidgetProvider.class);
+            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, new int[]{mAppWidgetId});
+            sendBroadcast(intent);
         }
     }
 
