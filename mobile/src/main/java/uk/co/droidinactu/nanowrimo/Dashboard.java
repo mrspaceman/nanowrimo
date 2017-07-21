@@ -117,6 +117,19 @@ public class Dashboard extends AppCompatActivity implements
         }
     };
 
+    public int checkPermission() {
+        if (checkSelfPermission(android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
+                checkSelfPermission(android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                ) {//Can add more as per requirement
+
+            requestPermissions(
+                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION,
+                            android.Manifest.permission.ACCESS_COARSE_LOCATION},
+                    123);
+        }
+        return checkSelfPermission(android.Manifest.permission.ACCESS_FINE_LOCATION);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -131,7 +144,7 @@ public class Dashboard extends AppCompatActivity implements
         });
         fab.setVisibility(View.GONE);
 
-        int permissionCheck = checkSelfPermission(android.Manifest.permission.ACCESS_FINE_LOCATION);
+        int permissionCheck = checkPermission();
 
         if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
             // Should we show an explanation?
@@ -228,7 +241,6 @@ public class Dashboard extends AppCompatActivity implements
     }
 
     private void updateCalendarHeader() {
-        dash_month_table.removeViews(0, dash_month_table.getChildCount());
         String[] headers = {"Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"};
         TableRow tblRwHeader = (TableRow) findViewById(R.id.dash_month_table_rowHead);
         for (int col = 0; col < 7; col++) {
