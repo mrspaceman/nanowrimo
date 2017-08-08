@@ -131,25 +131,37 @@ public class CalDayView extends LinearLayout implements View.OnClickListener {
         final ImageView image = (ImageView) dialog.findViewById(R.id.dialog_wrdcnt_icon);
         image.setImageResource(R.mipmap.ic_launcher);
 
-        final EditText txtWrdcnt = (EditText) dialog.findViewById(R.id.dialog_wrdcnt_words);
-        txtWrdcnt.setText("" + mDaysWrdCnt.getWordcount());
-        txtWrdcnt.setSelection(txtWrdcnt.getText().length());
+        final EditText txtWrdcntToday = (EditText) dialog.findViewById(R.id.dialog_wrdcnt_words_today);
+        txtWrdcntToday.setText("" + mDaysWrdCnt.getWordcount());
+        txtWrdcntToday.setSelection(txtWrdcntToday.getText().length());
+
+        final EditText txtWrdcntTotal = (EditText) dialog.findViewById(R.id.dialog_wrdcnt_words_total);
+        final int totalWordCount = NaNoApplication.getInstance().getDataManager().getWordCount(
+                mDaysWrdCnt.getYearNumber(),
+                mDaysWrdCnt.getMonthNumber(),
+                mDaysWrdCnt.getDayNumber());
+        txtWrdcntTotal.setText("" + totalWordCount);
+        txtWrdcntTotal.setSelection(txtWrdcntTotal.getText().length());
 
         final Button dialogButton = (Button) dialog.findViewById(R.id.dialog_wrdcnt_ButtonOK);
         // if button is clicked, close the custom dialog
         dialogButton.setOnClickListener(view -> {
-                String wrdcntStr = txtWrdcnt.getText().toString().trim();
-                try {
-                    int wordCount = Integer.parseInt(wrdcntStr);
-                    mDailyActual.setText(wrdcntStr);
-                    NaNoApplication.d(LOG_TAG + "onClick() number of words was [" + wordCount + "]");
-                    mDaysWrdCnt.setDaysWordCount(wordCount);
-                    NaNoApplication.getInstance().getDataManager().saveWordCount(mDaysWrdCnt);
-                } catch (NumberFormatException nfe) {
-                }
-                dialog.dismiss();
+            String wrdcntStr = txtWrdcntToday.getText().toString().trim();
+            if (wrdcntStr.trim().length() == 0) {
+                wrdcntStr = txtWrdcntTotal.getText().toString().trim();
+            }
+            try {
+                int wordCount = Integer.parseInt(wrdcntStr);
+                mDailyActual.setText(wrdcntStr);
+                NaNoApplication.d(LOG_TAG + "onClick() number of words was [" + wordCount + "]");
+                mDaysWrdCnt.setDaysWordCount(wordCount);
+                NaNoApplication.getInstance().getDataManager().saveWordCount(mDaysWrdCnt);
+            } catch (NumberFormatException nfe) {
+            }
+            dialog.dismiss();
         });
 
         dialog.show();
     }
+
 }

@@ -124,4 +124,5 @@
     <string name="about_cell_number_3">Actual Words Written</string>
     <string name="about_cell_number_4">Total Words Written</string>
     <string name="about_cell_number_5">Words Left</string>
+    <string name="title_activity_kotlin">KotlinActivity</string>
 </resources>

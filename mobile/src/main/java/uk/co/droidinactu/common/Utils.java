@@ -40,7 +40,9 @@ import uk.co.droidinactu.nanowrimo.NaNoApplication;
  */
 public final class Utils {
 
-    /** tag used for logging */
+    /**
+     * tag used for logging
+     */
     private static final String LOG_TAG = "Utils";
 
 
@@ -60,7 +62,7 @@ public final class Utils {
             // activityInfStr);
         }
         Collections.sort(activities);
-       NaNoApplication.d(LOG_TAG + "List Apps Finished ");
+        NaNoApplication.d(LOG_TAG + "List Apps Finished ");
     }
 
     public static void logDeviceBuildInfo() {
@@ -188,10 +190,8 @@ public final class Utils {
      * Reallocates an array with a new size, and copies the contents of the old
      * array to the new array.
      *
-     * @param oldArray
-     *         the old array, to be reallocated.
-     * @param newSize
-     *         the new array size.
+     * @param oldArray the old array, to be reallocated.
+     * @param newSize  the new array size.
      * @return A new array with the same contents.
      */
     public static Object resizeArray(final Object oldArray, final int newSize) {

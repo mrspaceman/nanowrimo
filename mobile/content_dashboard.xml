@@ -1,52 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="uk.co.droidinactu.nanowrimo.Dashboard"
-    tools:showIn="@layout/app_bar_dashboard">
+    tools:context="uk.co.droidinactu.nanowrimo.Dashboard" tools:showIn="@layout/app_bar_dashboard">
 
-    <TextView
-        android:id="@+id/dash_month_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TESTING"
+    <TextView android:id="@+id/dash_month_name" android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:text="TESTING"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/dash_username"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/dash_username"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TESTING"
+    <TextView android:id="@+id/dash_username" android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:text="TESTING"
         app:layout_constraintLeft_toRightOf="@id/dash_month_name"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/dash_month_name" />
 
-    <ScrollView
-        android:id="@+id/dash_month_table_scroller"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:scrollbars="none"
-        android:stretchColumns="*"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+    <ScrollView android:id="@+id/dash_month_table_scroller" android:layout_width="match_parent"
+        android:layout_height="match_parent" android:fillViewport="true" android:scrollbars="none"
+        android:stretchColumns="*" app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/dash_month_name">
 
-        <TableLayout
-            android:id="@+id/dash_month_table"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:stretchColumns="*">
+        <TableLayout android:id="@+id/dash_month_table" android:layout_width="match_parent"
+            android:layout_height="match_parent" android:stretchColumns="*">
 
-            <TableRow
-                android:id="@+id/dash_month_table_rowHead"
-                android:layout_width="match_parent"
+            <TableRow android:id="@+id/dash_month_table_rowHead" android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
         </TableLayout>

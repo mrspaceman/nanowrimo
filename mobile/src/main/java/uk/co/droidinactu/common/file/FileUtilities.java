@@ -46,10 +46,8 @@ public class FileUtilities {
     /**
      * copy one file to a new file.
      *
-     * @param in
-     *         the file to make the copy of.
-     * @param out
-     *         the destination for the copy of the file.
+     * @param in  the file to make the copy of.
+     * @param out the destination for the copy of the file.
      * @throws Exception
      */
     public static void copyFile(final File in, final File out) throws IOException {
@@ -189,8 +187,7 @@ public class FileUtilities {
      * By default File#delete fails for non-empty directories, it works like "rm".
      * We need something a little more brutual - this does the equivalent of "rm -r"
      *
-     * @param path
-     *         Root File Path
+     * @param path Root File Path
      * @return true iff the file and all sub files/directories have been removed
      * @throws FileNotFoundException
      */

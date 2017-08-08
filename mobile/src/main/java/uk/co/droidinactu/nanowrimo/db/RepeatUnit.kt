@@ -1,9 +1,9 @@
-package uk.co.droidinactu.nanowrimo.db;
+package uk.co.droidinactu.nanowrimo.db
 
 /**
  * Created by aspela on 28/06/17.
  */
 
-public enum RepeatUnit {
+enum class RepeatUnit {
     DAILY, WEEKLY, MONTHLY, YEARLY
 }

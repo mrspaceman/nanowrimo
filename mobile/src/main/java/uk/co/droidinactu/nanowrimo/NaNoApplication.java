@@ -60,8 +60,6 @@ public class NaNoApplication extends Application {
     private DataManager dataMgr;
     private PowerManager.WakeLock wakeLock;
 
-    public DataManager getDataManager(){return dataMgr;}
-
     public static void d(final String msg) {
         logMessage(Log.DEBUG, msg);
     }
@@ -125,39 +123,6 @@ public class NaNoApplication extends Application {
         return Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
     }
 
-
-    /*
-     * (non-Javadoc)
-     *
-     * @see android.app.Application#onCreate()
-     */
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        NaNoApplication.logMessage(Log.DEBUG, "onCreate(); application being created.");
-        NaNoApplication.instance = this;
-        dataMgr=new DataManager(getApplicationContext());
-    }
-
-    /*
-     * (non-Javadoc)
-     *
-     * @see android.app.Application#onTerminate()
-     */
-    @Override
-    public void onTerminate() {
-        super.onTerminate();
-    }
-
-    public PowerManager.WakeLock getWakeLock() {
-        if (wakeLock == null) {
-            // lazy loading: first call, create wakeLock via PowerManager.
-            PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-            wakeLock = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "wakeup");
-        }
-        return wakeLock;
-    }
-
     private static void copyFileUsingApacheCommonsIO(String source, String dest) throws IOException {
         copyFileUsingApacheCommonsIO(new File(source), new File(dest));
     }
@@ -202,6 +167,42 @@ public class NaNoApplication extends Application {
             is.close();
             os.close();
         }
+    }
+
+    public DataManager getDataManager() {
+        return dataMgr;
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see android.app.Application#onCreate()
+     */
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        NaNoApplication.logMessage(Log.DEBUG, "onCreate(); application being created.");
+        NaNoApplication.instance = this;
+        dataMgr = new DataManager(getApplicationContext());
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see android.app.Application#onTerminate()
+     */
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+    }
+
+    public PowerManager.WakeLock getWakeLock() {
+        if (wakeLock == null) {
+            // lazy loading: first call, create wakeLock via PowerManager.
+            PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+            wakeLock = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, "wakeup");
+        }
+        return wakeLock;
     }
 
     /* Checks if external storage is available for read and write */

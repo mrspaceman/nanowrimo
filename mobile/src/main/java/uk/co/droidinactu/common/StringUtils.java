@@ -18,10 +18,8 @@ public class StringUtils {
      * StringUtils.endsWithIgnoreCase("def", "ABCDEF") = false
      * </pre>
      *
-     * @param str
-     *         the String to check, may be null
-     * @param suffix
-     *         the suffix to find, may be null
+     * @param str    the String to check, may be null
+     * @param suffix the suffix to find, may be null
      * @return <code>true</code> if the String ends with the suffix, case insensitive, or
      * both <code>null</code>
      * @see java.lang.String#endsWith(String)
@@ -34,13 +32,10 @@ public class StringUtils {
     /**
      * Check if a String ends with a specified suffix (optionally case insensitive).
      *
-     * @param str
-     *         the String to check, may be null
-     * @param suffix
-     *         the suffix to find, may be null
-     * @param ignoreCase
-     *         inidicates whether the compare should ignore case
-     *         (case insensitive) or not.
+     * @param str        the String to check, may be null
+     * @param suffix     the suffix to find, may be null
+     * @param ignoreCase inidicates whether the compare should ignore case
+     *                   (case insensitive) or not.
      * @return <code>true</code> if the String starts with the prefix or
      * both <code>null</code>
      * @see java.lang.String#endsWith(String)
@@ -74,8 +69,7 @@ public class StringUtils {
      * It no longer trims the String.
      * That functionality is available in isBlank().
      *
-     * @param str
-     *         the String to check, may be null
+     * @param str the String to check, may be null
      * @return <code>true</code> if the String is empty or null
      */
     public static boolean isEmpty(String str) {

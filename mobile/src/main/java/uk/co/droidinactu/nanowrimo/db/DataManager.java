@@ -1,10 +1,7 @@
 package uk.co.droidinactu.nanowrimo.db;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.net.Uri;
-import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -13,7 +10,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,56 +17,36 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-
-import uk.co.droidinactu.nanowrimo.NaNoApplication;
 
 /**
  * Created by aspela on 27/06/17.
  */
 
 public class DataManager {
+    public static final String PREFS_NAME = "MyPrefsFile";
+    public static final String MESSAGES_CHILD = "messages";
+    public static final String EVENTS_CHILD = "events";
+    public static final String WORDCOUNT_CHILD = "wordcounts/";
+    public static final String ANONYMOUS = "anonymous";
     private static final String LOG_TAG = DataManager.class.getSimpleName() + ":";
-
     public final String NANO_API_GET_WORDCOUNT = "http://nanowrimo.org/wordcount_api/wc/"; // followed by username
     public final String NANO_API_GET_WORDCOUNT_HIST = "http://nanowrimo.org/wordcount_api/wchistory/"; // followed by username
     public final String NANO_API_GET_WORDCOUNT_REGION = "http://nanowrimo.org/wordcount_api/wcregion/"; // followed by region
     public final String NANO_API_GET_WORDCOUNT_REGION_HIST = "http://nanowrimo.org/wordcount_api/wcregionhist/"; // followed by region
-
-
     public final String NANO_API_GET_WORDCOUNT_SITE = "http://nanowrimo.org/wordcount_api/wcstatsummary";
     public final String NANO_API_GET_WORDCOUNT_SITE_HIST = "http://nanowrimo.org/wordcount_api/wcstats";
-
-    public static final String PREFS_NAME = "MyPrefsFile";
-
-    public static final String MESSAGES_CHILD = "messages";
-    public static final String EVENTS_CHILD = "events";
-    public static final String WORDCOUNT_CHILD = "wordcounts/";
-
-    public static final String ANONYMOUS = "anonymous";
-
+    public Map<String, DayWordCount> dayWrdCounts = new HashMap<>();
     private FirebaseDatabase mFbDatabase = null;
     private DatabaseReference mFbDatabaseRefWordCount;
-
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
-
     private Context context;
-
-    public Map<String, DayWordCount> dayWrdCounts = new HashMap<>();
 
 
     public DataManager(Context ctx) {
@@ -155,7 +131,11 @@ public class DataManager {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
-                        Log.d("Error.Response", error.getLocalizedMessage());
+                        String s = error.getMessage();
+                        if (s == null) {
+                            s = "Unknown Volley Error sending wordcount to NaNoWriMo website";
+                        }
+                        Log.d("Error.Response", s);
                     }
                 }
         ) {
@@ -185,6 +165,31 @@ public class DataManager {
             }
         }
         return list;
+    }
+
+    public int getWordCount(final int year, final int month) {
+        int cumWordCount = 0;
+        Map<String, DayWordCount> list = new HashMap<>();
+        for (String key : dayWrdCounts.keySet()) {
+            if (key.contains("/" + month + "/" + year)) {
+                cumWordCount += dayWrdCounts.get(key).getWordcount();
+            }
+        }
+        return cumWordCount;
+    }
+
+    public int getWordCount(final int year, final int month, final int day) {
+        int cumWordCount = 0;
+        Map<String, DayWordCount> list = new HashMap<>();
+        for (String key : dayWrdCounts.keySet()) {
+            if (key.contains("/" + month + "/" + year)) {
+                DayWordCount dwc = dayWrdCounts.get(key);
+                if (dwc.getDayNumber() <= day) {
+                    cumWordCount += dwc.getWordcount();
+                }
+            }
+        }
+        return cumWordCount;
     }
 
 

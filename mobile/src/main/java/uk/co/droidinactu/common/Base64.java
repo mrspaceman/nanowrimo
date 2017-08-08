@@ -62,6 +62,18 @@ public class Base64 {
         return Base64.BASE64.decode(b64, 0, b64.length());
     }
 
+    static public byte[] toBytes(final String b64, final int str, final int len) {
+        return Base64.BASE64.decode(b64, str, len);
+    }
+
+    static public String toString(final byte[] dta) {
+        return Base64.BASE64.encode(dta);
+    }
+
+    static public String toString(final byte[] dta, final int str, final int len) {
+        return Base64.BASE64.encode(dta, str, len);
+    }
+
     /**
      * Decode a Base64 string to an array of bytes. The string must have a
      * length evenly divisible by 4 (not counting line separators and other
@@ -138,18 +150,6 @@ public class Base64 {
             ba = b2;
         }
         return ba;
-    }
-
-    static public byte[] toBytes(final String b64, final int str, final int len) {
-        return Base64.BASE64.decode(b64, str, len);
-    }
-
-    static public String toString(final byte[] dta) {
-        return Base64.BASE64.encode(dta);
-    }
-
-    static public String toString(final byte[] dta, final int str, final int len) {
-        return Base64.BASE64.encode(dta, str, len);
     }
 
     public byte[] decode(final String b64) {
@@ -277,9 +277,8 @@ public class Base64 {
     /**
      * Set maximum line length for encoded lines. Ignored by decode.
      *
-     * @param len
-     *         Length of each line. 0 means no newlines inserted. Must be a
-     *         multiple of 4.
+     * @param len Length of each line. 0 means no newlines inserted. Must be a
+     *            multiple of 4.
      */
     public void setLineLength(final int len) {
         this.lineLength = (len / 4) * 4;
@@ -290,8 +289,7 @@ public class Base64 {
      * Usually contains only a combination of chars \n and \r, but could be any
      * chars except 'A'-'Z', 'a'-'z', '0'-'9', '+' and '/'.
      *
-     * @param linsep
-     *         Line separator - may be "" but not null.
+     * @param linsep Line separator - may be "" but not null.
      */
     public void setLineSeparator(final String linsep) {
         this.lineSeparator = linsep;

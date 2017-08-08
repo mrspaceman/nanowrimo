@@ -51,12 +51,9 @@ public final class ImageFunctions {
     /**
      * Scale a bitmap to the new size passed in.
      *
-     * @param bitmapOrg
-     *         original bitmap (before scaling)
-     * @param newWidth
-     *         the width to which the image will be scaled
-     * @param newHeight
-     *         the height to which the image will be scaled
+     * @param bitmapOrg original bitmap (before scaling)
+     * @param newWidth  the width to which the image will be scaled
+     * @param newHeight the height to which the image will be scaled
      * @return
      */
     public static Bitmap scaleImage(final Bitmap bitmapOrg, final int newWidth, final int newHeight) {

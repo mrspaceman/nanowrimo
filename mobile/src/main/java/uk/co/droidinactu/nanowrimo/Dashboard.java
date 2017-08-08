@@ -1,5 +1,6 @@
 package uk.co.droidinactu.nanowrimo;
 
+import android.Manifest;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Context;
@@ -55,17 +56,15 @@ public class Dashboard extends AppCompatActivity implements
         View.OnClickListener,
         NavigationView.OnNavigationItemSelectedListener,
         GoogleApiClient.OnConnectionFailedListener {
+    public static final int DEFAULT_MSG_LENGTH_LIMIT = 150;
+    public static final String INSTANCE_ID_TOKEN_RETRIEVED = "iid_token_retrieved";
+    public static final String BIKERCHAT_MSG_LENGTH = "bikerChat_msg_length";
     private static final String LOG_TAG = Dashboard.class.getSimpleName() + ":";
-
     private static final int REQUEST_INVITE = 1;
     private static final int REQUEST_IMAGE = 2;
-    public static final int DEFAULT_MSG_LENGTH_LIMIT = 150;
     private static final String MESSAGE_SENT_EVENT = "message_sent";
     private static final String MESSAGE_URL = "http://bikerbreakfastclub.firebase.google.com/message/";
     private static final String LOADING_IMAGE_URL = "https://www.google.com/images/spin-32.gif";
-
-    public static final String INSTANCE_ID_TOKEN_RETRIEVED = "iid_token_retrieved";
-    public static final String BIKERCHAT_MSG_LENGTH = "bikerChat_msg_length";
     private static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 8193;
 
     private ProgressBar mProgressBar;
@@ -125,9 +124,10 @@ public class Dashboard extends AppCompatActivity implements
             requestPermissions(
                     new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION,
                             android.Manifest.permission.ACCESS_COARSE_LOCATION},
-                    123);
+                    MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
         }
-        return checkSelfPermission(android.Manifest.permission.ACCESS_FINE_LOCATION);
+        return checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)
+                + checkSelfPermission(android.Manifest.permission.ACCESS_COARSE_LOCATION);
     }
 
     @Override
@@ -144,9 +144,7 @@ public class Dashboard extends AppCompatActivity implements
         });
         fab.setVisibility(View.GONE);
 
-        int permissionCheck = checkPermission();
-
-        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+        if (checkPermission() != PackageManager.PERMISSION_GRANTED) {
             // Should we show an explanation?
             if (shouldShowRequestPermissionRationale(android.Manifest.permission.ACCESS_FINE_LOCATION)) {
                 // Show an explanation to the user *asynchronously* -- don't block
@@ -155,7 +153,8 @@ public class Dashboard extends AppCompatActivity implements
             } else {
                 // No explanation needed, we can request the permission.
                 requestPermissions(
-                        new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                        new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION,
+                                Manifest.permission.ACCESS_COARSE_LOCATION},
                         MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
 
                 // MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION is an
@@ -324,7 +323,7 @@ public class Dashboard extends AppCompatActivity implements
         int widgetIDs[] = appWidgetManager.getAppWidgetIds(new ComponentName(getApplication(), NaNoMonthWidgetProvider.class));
 
         for (int mAppWidgetId : widgetIDs) {
-            NaNoMonthWidgetProvider.updateAppWidget(this.getApplicationContext(),appWidgetManager, mAppWidgetId);
+            NaNoMonthWidgetProvider.updateAppWidget(this.getApplicationContext(), appWidgetManager, mAppWidgetId);
         }
     }
 

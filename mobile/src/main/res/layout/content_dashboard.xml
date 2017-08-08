@@ -12,30 +12,30 @@
         android:id="@+id/dash_month_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TESTING"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_toLeftOf="@id/dash_username"/>
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@id/dash_username"
+        android:text="TESTING" />
 
     <TextView
         android:id="@+id/dash_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TESTING"
+        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true" />
+        android:text="TESTING" />
 
     <ScrollView
         android:id="@+id/dash_month_table_scroller"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:scrollbars="none"
-        android:stretchColumns="*"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@id/dash_month_name">
+        android:layout_below="@id/dash_month_name"
+        android:fillViewport="true"
+        android:scrollbars="none"
+        android:stretchColumns="*">
 
         <TableLayout
             android:id="@+id/dash_month_table"

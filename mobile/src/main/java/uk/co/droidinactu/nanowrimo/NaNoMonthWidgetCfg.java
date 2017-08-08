@@ -2,8 +2,8 @@ package uk.co.droidinactu.nanowrimo;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.RemoteViews;
 
 public class NaNoMonthWidgetCfg extends AppCompatActivity {
@@ -30,7 +30,7 @@ public class NaNoMonthWidgetCfg extends AppCompatActivity {
             Intent resultValue = new Intent();
             resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);
             setResult(RESULT_OK, resultValue);
-            NaNoMonthWidgetProvider.updateAppWidget(this.getApplicationContext(),appWidgetManager, mAppWidgetId);
+            NaNoMonthWidgetProvider.updateAppWidget(this.getApplicationContext(), appWidgetManager, mAppWidgetId);
             finish();
         }
     }
