@@ -55,6 +55,7 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
 
         // Assign fields
         mSignInButton = (SignInButton) findViewById(R.id.sign_in_button);
+        mSignInButton.setSize(SignInButton.SIZE_WIDE);
 
         // Set click listeners
         mSignInButton.setOnClickListener(this);
@@ -64,7 +65,7 @@ public class SignInActivity extends AppCompatActivity implements GoogleApiClient
                 .requestEmail()
                 .build();
         mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
+                .enableAutoManage(this , this )
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 

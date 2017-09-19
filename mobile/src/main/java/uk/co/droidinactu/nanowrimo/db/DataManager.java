@@ -89,6 +89,8 @@ public class DataManager {
     }
 
     public FirebaseUser getFirebaseUser() {
+        if (mFirebaseUser==null && mFirebaseAuth!=null){
+            mFirebaseUser = mFirebaseAuth.getCurrentUser();}
         return mFirebaseUser;
     }
 
